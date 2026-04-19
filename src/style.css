@@ -45,6 +45,7 @@ body {
   position: relative;
   width: 100vw;
   height: 100vh;
+  height: 100dvh;
 }
 
 .game-shell.menu-mode #game-root,
@@ -65,6 +66,7 @@ body {
   display: grid;
   place-items: center;
   padding: 28px;
+  overflow: auto;
   background:
     radial-gradient(circle at 50% 30%, rgba(90, 108, 140, 0.16), transparent 34%),
     linear-gradient(180deg, rgba(6, 8, 14, 0.2), rgba(3, 4, 8, 0.85));
@@ -76,6 +78,8 @@ body {
 
 .main-menu__panel {
   width: min(720px, calc(100vw - 56px));
+  max-height: calc(100dvh - 56px);
+  overflow: auto;
   padding: 34px 36px;
   border-radius: 22px;
   background:
@@ -189,8 +193,8 @@ body {
 
 .joystick {
   position: absolute;
-  left: 18px;
-  bottom: 18px;
+  left: calc(18px + env(safe-area-inset-left, 0px));
+  bottom: calc(18px + env(safe-area-inset-bottom, 0px));
   width: 120px;
   height: 120px;
   pointer-events: auto;
@@ -224,8 +228,8 @@ body {
 
 .mobile-actions {
   position: absolute;
-  right: 18px;
-  bottom: 18px;
+  right: calc(18px + env(safe-area-inset-right, 0px));
+  bottom: calc(18px + env(safe-area-inset-bottom, 0px));
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 72px));
   gap: 10px;
@@ -482,20 +486,108 @@ body {
 
 @media (max-width: 900px) {
   .hud-top {
-    flex-direction: column;
+    display: none;
   }
 
   .status-panel,
-  .cast-panel,
   .side-panel {
-    width: calc(100vw - 36px);
+    display: none;
+  }
+
+  .task-item p {
+    display: none;
   }
 
   .cast-panel {
-    left: 18px;
-    right: 18px;
-    bottom: 10px;
+    left: 50%;
+    right: auto;
+    bottom: calc(154px + env(safe-area-inset-bottom, 0px));
+    width: min(320px, calc(100vw - 120px));
     transform: none;
+    transform: translateX(-50%);
+    padding: 12px 14px;
+  }
+
+  .cast-meter {
+    height: 12px;
+  }
+
+  .center-toast {
+    min-width: 0;
+    width: min(84vw, 460px);
+    padding: 12px 16px;
+    font-size: 16px;
+    line-height: 1.45;
+    transform: translate(-50%, -54%);
+  }
+
+  .center-toast.visible {
+    transform: translate(-50%, -58%);
+  }
+
+  .main-menu {
+    padding: 16px;
+  }
+
+  .main-menu__panel {
+    width: min(100%, 520px);
+    max-height: calc(100dvh - 32px);
+    padding: 22px 18px;
+    border-radius: 18px;
+  }
+
+  .main-menu__panel h1 {
+    font-size: clamp(32px, 12vw, 54px);
+  }
+
+  .main-menu__desc {
+    margin: 12px 0 16px;
+    font-size: 14px;
+    line-height: 1.65;
+  }
+
+  .main-menu__meta {
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+
+  .main-menu__meta span {
+    font-size: 11px;
+  }
+
+  .main-menu__start {
+    width: 100%;
+    min-width: 0;
+    padding: 13px 16px;
+  }
+
+  .main-menu__hint {
+    font-size: 12px;
+  }
+
+  .joystick {
+    width: 104px;
+    height: 104px;
+  }
+
+  .joystick__base {
+    width: 104px;
+    height: 104px;
+  }
+
+  .joystick__stick {
+    width: 50px;
+    height: 50px;
+  }
+
+  .mobile-actions {
+    grid-template-columns: repeat(2, minmax(0, 64px));
+    gap: 8px;
+  }
+
+  .mobile-btn {
+    min-height: 48px;
+    font-size: 14px;
   }
 }
 
